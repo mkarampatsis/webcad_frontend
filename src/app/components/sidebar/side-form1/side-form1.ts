@@ -22,7 +22,7 @@ activeOffcanvas = inject(NgbActiveOffcanvas);
   // loadFile() { console.log('Load File'); }
   saveFile() { console.log('Save File'); }
   importFile() { 
-    console.log('Import DXF'); 
+    console.log('Import File'); 
     this.fileInput.nativeElement.click();
   }
   exportScene() { console.log('Export Scene'); }
@@ -51,6 +51,16 @@ activeOffcanvas = inject(NgbActiveOffcanvas);
     if (ext === 'glb' || ext === 'gltf') {
       const url = URL.createObjectURL(file);
       this.importFileService.cadFileSignal.set({ type: 'glb', url });
+    }
+
+    if (ext === 'stl') {
+      const url = URL.createObjectURL(file);
+      this.importFileService.cadFileSignal.set({ type: 'stl', url });
+    }
+
+    if (ext === 'obj') {
+      const url = URL.createObjectURL(file);
+      this.importFileService.cadFileSignal.set({ type: 'obj', url });
     }
 
     input.value = '';
