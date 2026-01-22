@@ -66,6 +66,21 @@
     <ngt-primitive *args="[object]" [parameters]="{ scale: 0.15 }" />
   </ngts-center>
 }
-
+<ngts-grid
+  [options]="{
+    planeArgs: [planeWidth(), planeHeight()],
+    position: [0, -0.01, 0],
+    cellSize: cellSize(),
+    cellThickness: cellThickness(),
+    cellColor: cellColor(),
+    sectionSize: sectionSize(),
+    sectionThickness: sectionThickness(),
+    sectionColor: sectionColor(),
+    fadeDistance: fadeDistance(),
+    fadeStrength: fadeStrength(),
+    followCamera: followCamera(),
+    infiniteGrid: infiniteGrid(),
+  }"
+/>
 <ngts-environment [options]="{ preset: 'city' }" />
 <ngts-camera-controls />
