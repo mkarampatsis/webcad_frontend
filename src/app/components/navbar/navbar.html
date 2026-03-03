@@ -1,123 +1,60 @@
-<nav class="navbar navbar-expand-lg bg-secondary-subtle shadow mb-4">
-  <div class="container-fluid">
-
-    <a class="navbar-brand" routerLink="">
-      <img class="rounded-5" width="50" height="50" src="assets/images/logoCad.png" />
-    </a>
-
-    <!-- ng-bootstrap collapse toggle -->
-    <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed"
-      aria-controls="navbarSupportedContent" aria-expanded="!isCollapsed" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <!-- ngbCollapse -->
-    <div [ngbCollapse]="isCollapsed" class="navbar-collapse" id="navbarSupportedContent">
-
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-        <li class="nav-item">
-          <a class="nav-link active" routerLink="">Home</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" routerLink="cad-scene" routerLinkActive="fw-bold">Cad</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" routerLink="than-cad" routerLinkActive="fw-bold">ThanCad</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" routerLink="three-cad" routerLinkActive="fw-bold">Three Cad</a>
-        </li>
-
-        <!-- ng-bootstrap dropdown -->
-        <li class="nav-item dropdown" ngbDropdown>
-          <a class="nav-link dropdown-toggle" ngbDropdownToggle>
-            Dropdown
-          </a>
-
-          <ul ngbDropdownMenu class="dropdown-menu">
-            <li><a ngbDropdownItem class="dropdown-item">Action</a></li>
-            <li><a ngbDropdownItem class="dropdown-item">Another action</a></li>
-            <li>
-              <hr class="dropdown-divider">
+<div class="bg-secondary-subtle shadow mb-4">
+  <div class="p-2 d-flex align-items-start align-items-lg-center justify-content-between">
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a class="navbar-brand" routerLink="landing">
+          <img class="rounded-5" width="50" height="50" src="assets/images/logoCad.png" />
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul ngbNav #nav="ngbNav" [activeId]="2" class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li [ngbNavItem]="1">
+              <a ngbNavLink routerLink="landing" class="active" routerLinkActive="fw-bold">Home</a>
             </li>
-            <li><a ngbDropdownItem class="dropdown-item">Something else here</a></li>
-          </ul>
-        </li>
-
-        <!-- <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-        </li> -->
-
-      </ul>
-
-      <div class="text-white mt-2 mt-lg-0">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-         <li class="nav-item dropdown" ngbDropdown>
-          <a class="nav-link dropdown-toggle" ngbDropdownToggle>
-            Dropdown
-          </a>
-
-          <ul ngbDropdownMenu class="dropdown-menu">
-            <li><a ngbDropdownItem class="dropdown-item">Action</a></li>
-            <li><a ngbDropdownItem class="dropdown-item">Another action</a></li>
-            <li>
-              <hr class="dropdown-divider">
+            <li [ngbNavItem]="2">
+              <a ngbNavLink routerLink="cad-scene" routerLinkActive="fw-bold">Cad</a>
             </li>
-            <li><a ngbDropdownItem class="dropdown-item">Something else here</a></li>
+            <li [ngbNavItem]="3">
+              <a class="nav-link" routerLink="than-cad" routerLinkActive="fw-bold">ThanCad</a>
+            </li>
+            <li [ngbNavItem]="4">
+              <a class="nav-link" routerLink="three-cad" routerLinkActive="fw-bold">Three Cad</a>
+            </li>
+            <!-- <li ngbDropdown class="nav-item" role="presentation">
+              <button type="button" class="nav-link" ngbDropdownToggle>Dropdown</button>
+              <div ngbDropdownMenu>
+                <button ngbDropdownItem>Action</button>
+                <button ngbDropdownItem>Another action</button>
+                <button ngbDropdownItem>Something else here</button>
+                <div class="dropdown-divider"></div>
+                <button ngbDropdownItem>Separated link</button>
+              </div>
+            </li> -->
           </ul>
-        </li>  
-        </ul>
+        </div>
       </div>
-
-    </div>
-  </div>
-</nav>
-
-<!-- 
-<nav class="navbar navbar-expand-lg bg-secondary-subtle shadow mb-4">
-  <div class="container-fluid">
-    <a class="navbar-brand" routerLink="">
-      <img class="rounded-5" width="50" height="50" src="assets/images/logoCad.png"/>
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="cad-scene" routerLinkActive="fw-bold">Cad</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="than-cad" routerLinkActive="fw-bold">ThanCad</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="three-cad" routerLinkActive="fw-bold">Three Cad</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
+    </nav>
+    <div class="text-white mt-2 mt-lg-0">
+      <ul class="navbar-nav small">
+        <li class="nav-item dropdown" ngbDropdown>
+          <a id="userContextMenu" class="d-flex align-items-center" ngbDropdownToggle>
+            <i class="bi bi-person-circle text-white fs-1"></i>
           </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+          <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="userContextMenu">
+            <a ngbDropdownItem (click)="login()">
+              <div class="d-flex align-items-center gap-3">
+                <i class="bi bi-box-arrow-in-right"></i>
+                Είσοδος
+              </div>
+            </a>
+          </div>
+
         </li>
       </ul>
-      <div class="text-white mt-2 mt-lg-0">
-				<app-user-info></app-user-info>
-			</div>
     </div>
   </div>
-</nav> -->
+</div>
+<div [ngbNavOutlet]="nav" class="mt-2"></div>

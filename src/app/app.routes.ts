@@ -17,6 +17,10 @@ export const routes: Routes = [
     path: 'landing',
     loadChildren: () => import('./components/landing/landing.routes').then((m) => m.LandingRoutes),
   },
+   {
+    path: 'login',
+    loadChildren: () => import('./components/login/login.routes').then((m) => m.LoginRoutes),
+  },
   {
     path: '',
     loadChildren: () => import('./components/landing/landing.routes').then((m) => m.LandingRoutes),

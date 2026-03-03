@@ -1,4 +1,6 @@
 # See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+src/app/shared/config.ts
+.angular
 
 # Compiled output
 /dist
