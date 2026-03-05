@@ -10,14 +10,8 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideNgtRenderer } from 'angular-three/dom';
-
-import { 
-    GoogleLoginProvider, 
-    SocialAuthServiceConfig,
-    SOCIAL_AUTH_CONFIG,
-    SocialLoginModule
-  } from '@abacritt/angularx-social-login';
-import { GoogleClientId } from './shared/config';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import { AuthInterceptorService } from './shared/services/auth-interceptor';
 
 registerLocaleData(localeEl, 'el-GR');
 
@@ -27,20 +21,12 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideNgtRenderer(),
+    provideHttpClient(withInterceptorsFromDi()),
+    // Added the interceptor in last step for jwt
     {
-      provide: SOCIAL_AUTH_CONFIG,
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(GoogleClientId),
-          }
-        ],
-        onError: (err: any) => {
-          console.log(err);
-        },
-      } as SocialAuthServiceConfig,
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true,
     },
     { provide: LOCALE_ID, useValue: 'el-GR' },
 
