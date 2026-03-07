@@ -35,6 +35,7 @@ export class AuthService {
       }
     });
   }
+  
   login(token: string) {
     return this.http.post<{token:string}>(`${API_AUTH_URL}/google`,{token});
   }

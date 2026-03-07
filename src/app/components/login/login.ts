@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 
 import { GoogleClientId } from '../../shared/config';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 declare const google: any;
 
@@ -11,10 +12,10 @@ declare const google: any;
   styleUrl: './login.css',
 })
 
-
-
 export class Login {
-  
+
+  authService = inject(AuthService)
+
   ngOnInit() {
     this.initializeGoogleSignIn();
   }
@@ -39,6 +40,11 @@ export class Login {
     // send to backend
     // response.credential is the JWT token
     console.log('Encoded JWT ID token: ' + response.credential);
+    this.authService.login(idToken)
+      .subscribe({
+        next: (res) => console.log('Backend login success', res),
+        error: (err) => console.error('Backend login error', err),
+      })
   }
 
   // loginWithGoogle() { 
