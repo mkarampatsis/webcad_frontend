@@ -5,7 +5,7 @@ import { User } from '../interfaces/user';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 
-const API_AUTH_URL = `${environment.apiURL}/api/auth`;
+const API_AUTH_URL = `${environment.apiURL}/auth`;
 
 @Injectable({
   providedIn: 'root',
