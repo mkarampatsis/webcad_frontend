@@ -6,7 +6,9 @@ export interface IRole {
 }
 
 export interface User {
-  username: string;
-  email: string;
+  id: string,
+  email: string,
+  name: string,
+  picture: string,
   roles: IRole[];
 }

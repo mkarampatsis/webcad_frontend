@@ -14,7 +14,8 @@ declare const google: any;
 
 export class Login {
 
-  authService = inject(AuthService)
+  authService = inject(AuthService);
+  user = this.authService.user;
 
   ngOnInit() {
     this.initializeGoogleSignIn();
@@ -42,7 +43,11 @@ export class Login {
     console.log('Encoded JWT ID token: ' + response.credential);
     this.authService.login(idToken)
       .subscribe({
-        next: (res) => console.log('Backend login success', res),
+        next: (res) => {
+          console.log('Backend login success', res)
+          this.user.set(res.user);
+          localStorage.setItem('accessToken', res.token);
+        },
         error: (err) => console.error('Backend login error', err),
       })
   }

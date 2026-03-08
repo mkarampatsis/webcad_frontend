@@ -22,14 +22,16 @@ export class AuthService {
       
       const decodedTokenSubject = jwtDecode(access_token) as unknown as User;
       this.user.set({
-        username: decodedTokenSubject.username,
+        id: decodedTokenSubject.id,
         email: decodedTokenSubject.email,
+        name: decodedTokenSubject.name,
+        picture: decodedTokenSubject.picture,
         roles: decodedTokenSubject.roles
       });
     }
     effect(() => {
       if (this.user()) {
-        console.log('User logged in:', this.user()?.username);
+        console.log('User logged in:', this.user()?.email);
       } else {
         console.log('No user logged in');
       }
@@ -37,7 +39,7 @@ export class AuthService {
   }
   
   login(token: string) {
-    return this.http.post<{token:string}>(`${API_AUTH_URL}/google`,{token});
+    return this.http.post<{token:string, user:User}>(`${API_AUTH_URL}/google`,{token});
   }
 
   logout() {
