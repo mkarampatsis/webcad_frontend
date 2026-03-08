@@ -41,15 +41,28 @@
       <ul class="navbar-nav small">
         <li class="nav-item dropdown" ngbDropdown>
           <a id="userContextMenu" class="d-flex align-items-center" ngbDropdownToggle>
-            <i class="bi bi-person-circle text-white fs-1"></i>
+            @if (user()?.picture) {
+              <img class="rounded-circle me-2" [src]="user()?.picture" alt="user photo" />
+            } @else {
+              <i class="bi bi-person-circle text-white fs-1"></i>
+            }
           </a>
           <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="userContextMenu">
-            <a ngbDropdownItem (click)="login()">
+            @if (user()){
+              <a ngbDropdownItem (click)="logout()">
               <div class="d-flex align-items-center gap-3">
                 <i class="bi bi-box-arrow-in-right"></i>
-                Είσοδος
+                Έξοδος
               </div>
             </a>
+            } @else {
+              <a ngbDropdownItem (click)="login()">
+                <div class="d-flex align-items-center gap-3">
+                  <i class="bi bi-box-arrow-in-right"></i>
+                  Είσοδος
+                </div>
+              </a>
+            }
           </div>
           <!-- Για logout -->
           <!-- google.accounts.id.disableAutoSelect(); -->

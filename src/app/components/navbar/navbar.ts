@@ -14,6 +14,7 @@ import {
 	NgbNavLinkBase,
 	NgbNavOutlet
 } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -38,6 +39,9 @@ import {
 })
 export class Navbar {
   router = inject(Router);
+  authService = inject(AuthService);
+
+  user = this.authService.user;
   isCollapsed = true;
 
   login() {
@@ -46,7 +50,7 @@ export class Navbar {
 
   logout() {
     console.log('Logout clicked');
-    // this.authService.signOut();
-    // this.authService.removeUser();
+    this.authService.signOut();
+    this.authService.removeUser();
   }
 }

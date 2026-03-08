@@ -47,4 +47,15 @@ export class AuthService {
     localStorage.removeItem('access_token');
     this.router.navigate(['user-login-example']);
   }
+  
+  signOut() {
+    this.socialAuthService.signOut();
+    this.http.post(`${APIPREFIX}/logout`, this.userInfo()).pipe(take(1)).subscribe();
+  }
+
+  removeUser(){
+    this.user.set(null);
+    localStorage.removeItem('accessToken');
+    this.router.navigate(['/login']);
+  }
 }
