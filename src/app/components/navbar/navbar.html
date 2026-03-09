@@ -1,5 +1,5 @@
-<div class="bg-secondary-subtle shadow mb-4">
-  <div class="p-2 d-flex align-items-start align-items-lg-center justify-content-between">
+<div style="height: 100px;" class="bg-secondary-subtle shadow mb-4">
+  <div class="p-2 d-flex align-items-start align-items-lg-center justify-content-between h-100">
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
         <a class="navbar-brand" routerLink="landing">
@@ -41,8 +41,8 @@
       <ul class="navbar-nav small">
         <li class="nav-item dropdown" ngbDropdown>
           <a id="userContextMenu" class="d-flex align-items-center" ngbDropdownToggle>
-            @if (user()?.picture) {
-              <img class="rounded-circle me-2" [src]="user()?.picture" alt="user photo" />
+            @if (user()) {
+              <img class="rounded-circle me-2" [src]="user()?.photoUrl" alt="user photo"/>
             } @else {
               <i class="bi bi-person-circle text-white fs-1"></i>
             }

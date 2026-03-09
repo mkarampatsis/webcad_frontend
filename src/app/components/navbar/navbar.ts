@@ -42,8 +42,8 @@ export class Navbar {
   authService = inject(AuthService);
 
   user = this.authService.user;
-  isCollapsed = true;
-
+  // isCollapsed = true;
+  
   login() {
     this.router.navigate(['login']);
   }

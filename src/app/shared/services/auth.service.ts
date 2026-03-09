@@ -25,10 +25,10 @@ export class AuthService {
       
       const decodedTokenSubject = jwtDecode(access_token) as unknown as User;
       this.user.set({
-        id: decodedTokenSubject.id,
+        googleId: decodedTokenSubject.googleId,
         email: decodedTokenSubject.email,
         name: decodedTokenSubject.name,
-        picture: decodedTokenSubject.picture,
+        photoUrl: decodedTokenSubject.photoUrl,
         roles: decodedTokenSubject.roles
       });
     }
@@ -57,13 +57,10 @@ export class AuthService {
       client_id: GoogleClientId,
       callback: (response: any) => this.handleCredential(response)
     });
-
-    google.accounts.id.renderButton(
-      document.getElementById("googleBtn"),
-      { theme: "outline", size: "large" }
-    );
-
+    
     google.accounts.id.prompt(); // Display the One Tap prompt automatically on page load
+    
+    return google;
   }
 
   handleCredential(response: any) {
@@ -71,7 +68,7 @@ export class AuthService {
 
     // send to backend
     // response.credential is the JWT token
-    console.log('Encoded JWT ID token: ' + response.credential);
+    // console.log('Encoded JWT ID token: ' + response.credential);
     this.login(idToken)
       .subscribe({
         next: (res) => {

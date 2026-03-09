@@ -1,6 +1,62 @@
-<!-- <div *ngIf="!user()" class="govgr-body"> -->
-    <p>Στην πλατφορμα η πρόσβαση στο σύστημα είναι δυνατή μόνο από εξουσιοδοτημένους χρήστες 
-        με τη χρήση του Google account τους. Χρησιμοποιήστε τον παρακάτω σύνδεσμο για να συνδεθείτε.
-    </p>
-    <div id="googleBtn">sa</div>
-<!-- </div>  -->
+<div class="w-50 p-2 mx-auto mt-5">
+    <h2 class="text-success text-center">Log in to your account</h2>
+    <h4 class="text-center">
+        <span>Don't have an account? </span>
+        <a class="text-primary link-underline link-underline-opacity-0" role="button" (click)="signUp()">Sign Up</a>
+    </h4>
+    <div class="w-50 mx-auto mt-4">
+        <div id="googleBtn"></div>
+    </div>
+    <div class="w-50 mx-auto mt-4 text-center">
+        <p class="text-secondary">---- Or with email and password ----</p>
+    </div>
+    @if (!newUser){
+        <div class="w-50 mx-auto mt-4">
+            <form [formGroup]="loginForm" (ngSubmit)="loginWithEmail()">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="email" formControlName="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" formControlName="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Log In</button>
+            </form>
+        </div>
+    } @else {
+        <div class="w-50 mx-auto mt-4">
+            <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="email" formControlName="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="firstname" class="form-label">First name</label>
+                    <input type="text" class="form-control" id="firstname" formControlName="firstname" required>
+                </div>
+                <div class="mb-3">
+                    <label for="lastname" class="form-label">Last name</label>
+                    <input type="text" class="form-control" id="lastname" formControlName="lastname" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" formControlName="password" required>
+                </div>
+                <div class="mb-3">
+                    <label for="confirmPassword" class="form-label">Confirm password</label>
+                    <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword" required>
+                    @if(signUpForm.get('confirmPassword')?.hasError('passwordMismatch') && signUpForm.get('confirmPassword')?.touched) {
+                        <div class="text-danger mt-1">Passwords do not match</div>
+                    }
+                </div>
+                <button 
+                    class="btn btn-primary w-100"
+                    [disabled]="signUpForm.invalid"
+                    (click)="signUpFormSubmit(signUpForm.value)">
+                    Sign Up
+                </button>
+            </form> 
+        </div>
+    }
+</div>
