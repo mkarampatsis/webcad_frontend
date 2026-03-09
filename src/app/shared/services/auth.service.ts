@@ -4,8 +4,11 @@ import { environment } from 'src/environments/environment';
 import { User } from '../interfaces/user';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
+import { GoogleClientId } from '../../shared/config';
 
 const API_AUTH_URL = `${environment.apiURL}/auth`;
+
+declare const google: any;
 
 @Injectable({
   providedIn: 'root',
@@ -48,9 +51,44 @@ export class AuthService {
     this.router.navigate(['user-login-example']);
   }
   
+
+  initializeGoogleSignIn() {
+    google.accounts.id.initialize({
+      client_id: GoogleClientId,
+      callback: (response: any) => this.handleCredential(response)
+    });
+
+    google.accounts.id.renderButton(
+      document.getElementById("googleBtn"),
+      { theme: "outline", size: "large" }
+    );
+
+    google.accounts.id.prompt(); // Display the One Tap prompt automatically on page load
+  }
+
+  handleCredential(response: any) {
+    const idToken = response.credential;
+
+    // send to backend
+    // response.credential is the JWT token
+    console.log('Encoded JWT ID token: ' + response.credential);
+    this.login(idToken)
+      .subscribe({
+        next: (res) => {
+          console.log('Backend login success', res)
+          this.user.set(res.user);
+          localStorage.setItem('accessToken', res.token);
+        },
+        error: (err) => console.error('Backend login error', err),
+      })
+  }
+
   signOut() {
-    this.socialAuthService.signOut();
-    this.http.post(`${APIPREFIX}/logout`, this.userInfo()).pipe(take(1)).subscribe();
+    google.accounts.id.disableAutoSelect();
+
+    // this.http.post(`${APIPREFIX}/logout`, this.userInfo()).pipe(take(1)).subscribe();
+    // Sto backend gia logout
+    // Log(user_id=data["user_id"], action="logout", data={"email": data["email"]}).save()
   }
 
   removeUser(){
