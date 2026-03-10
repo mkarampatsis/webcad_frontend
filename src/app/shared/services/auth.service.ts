@@ -25,30 +25,30 @@ export class AuthService {
       
       const decodedTokenSubject = jwtDecode(access_token) as unknown as User;
       this.user.set({
-        googleId: decodedTokenSubject.googleId,
+        userId: decodedTokenSubject.userId,
         email: decodedTokenSubject.email,
         name: decodedTokenSubject.name,
         photoUrl: decodedTokenSubject.photoUrl,
         roles: decodedTokenSubject.roles
       });
     }
-    effect(() => {
-      if (this.user()) {
-        console.log('User logged in:', this.user()?.email);
-      } else {
-        console.log('No user logged in');
-      }
-    });
+    // effect(() => {
+    //   if (this.user()) {
+    //     console.log('User logged in:', this.user()?.email);
+    //   } else {
+    //     console.log('No user logged in');
+    //   }
+    // });
   }
   
   login(token: string) {
-    return this.http.post<{token:string, user:User}>(`${API_AUTH_URL}/google`,{token});
+    return this.http.post<{token:string}>(`${API_AUTH_URL}/google`,{token});
   }
 
   logout() {
     this.user.set(null);
     localStorage.removeItem('access_token');
-    this.router.navigate(['user-login-example']);
+    this.router.navigate(['/login']);
   }
   
 
@@ -73,12 +73,29 @@ export class AuthService {
       .subscribe({
         next: (res) => {
           console.log('Backend login success', res)
-          this.user.set(res.user);
+          const decodedToken = jwtDecode(res.token) as User;
+          this.user.set(decodedToken);
           localStorage.setItem('accessToken', res.token);
+          console.log('Decoded token:', decodedToken);
+          this.router.navigate(['/than-cad']);
         },
         error: (err) => console.error('Backend login error', err),
       })
   }
+
+    isTokenExpired(): boolean {
+      const token = localStorage.getItem("access_token");
+      if (!token) return true;
+
+      try {
+        const decoded: any = jwtDecode(token);
+        const exp = decoded.exp;
+        const now = Math.floor(Date.now() / 1000);
+        return exp < now;
+      } catch (e) {
+        return true; // treat invalid token as expired
+      }
+    }
 
   signOut() {
     google.accounts.id.disableAutoSelect();

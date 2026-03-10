@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { adminRoleGuard } from './shared/guards/user-role-guard';
+import { authGuard } from './shared/guards/auth-guard';
 
 export const routes: Routes = [
   {
@@ -8,6 +10,7 @@ export const routes: Routes = [
   {
     path: 'than-cad',
     loadChildren: () => import('./components/than-cad/than-cad.routes').then((m) => m.ThanCadRoutes),
+    canActivate: [authGuard, adminRoleGuard],
   },
   {
     path: 'three-cad',
@@ -24,6 +27,10 @@ export const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./components/landing/landing.routes').then((m) => m.LandingRoutes),
+  },
+  {
+    path: 'restricted-content',
+    loadChildren: () => import('./shared/components/restricted-content/restricted-content').then((m) => m.RestrictedContent),
   },
   {
     path: '**',
