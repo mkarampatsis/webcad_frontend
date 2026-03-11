@@ -41,7 +41,7 @@
       <ul class="navbar-nav small">
         <li class="nav-item dropdown" ngbDropdown>
           <a id="userContextMenu" class="d-flex align-items-center" ngbDropdownToggle>
-            @if (user()) {
+            @if (user()?.photoUrl) {
               <img class="rounded-circle me-2" [src]="user()?.photoUrl" alt="user photo"/>
             } @else {
               <i class="bi bi-person-circle text-white fs-1"></i>

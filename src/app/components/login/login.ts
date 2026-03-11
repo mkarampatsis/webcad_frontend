@@ -6,6 +6,7 @@ import {
   Validators, 
   AbstractControl, } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { UserService } from 'src/app/shared/services/user.service';
 
 declare let google: any;
 
@@ -19,6 +20,7 @@ declare let google: any;
 export class Login {
 
   authService = inject(AuthService);
+  userService = inject(UserService);
   user = this.authService.user;
   
   newUser: boolean = false;
@@ -82,8 +84,19 @@ export class Login {
     throw new Error('Method not implemented.');
   }
 
-  signUpFormSubmit(arg0: Partial<{ email: string|null; firstname: string|null; lastname: string|null; password: string|null; confirmPassword: string|null; }>) {
-    throw new Error('Method not implemented.');
+  signUpFormSubmit(value: Partial<{ email: string|null; firstname: string|null; lastname: string|null; password: string|null; confirmPassword: string|null; }>) {
+    console.log('Sign-up form submitted with values:', value);
+    this.userService.registerUser({
+      email: value.email || undefined,
+      name: `${value.firstname} ${value.lastname}`,
+      password: value.password || undefined
+    }).subscribe({
+      next: (res) => {
+        console.log('User registered successfully', res);
+        this.newUser = false;
+      },
+      error: (err) => console.error('User registration error', err),
+    });
   }
 
 }

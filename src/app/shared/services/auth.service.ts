@@ -72,11 +72,11 @@ export class AuthService {
     this.login(idToken)
       .subscribe({
         next: (res) => {
-          console.log('Backend login success', res)
+          // console.log('Backend login success', res)
           const decodedToken = jwtDecode(res.token) as User;
           this.user.set(decodedToken);
           localStorage.setItem('accessToken', res.token);
-          console.log('Decoded token:', decodedToken);
+          // console.log('Decoded token:', decodedToken);
           this.router.navigate(['/than-cad']);
         },
         error: (err) => console.error('Backend login error', err),
@@ -84,7 +84,7 @@ export class AuthService {
   }
 
     isTokenExpired(): boolean {
-      const token = localStorage.getItem("access_token");
+      const token = localStorage.getItem("accessToken");
       if (!token) return true;
 
       try {

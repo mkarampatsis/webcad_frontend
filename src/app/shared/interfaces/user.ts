@@ -5,3 +5,9 @@ export interface User {
   photoUrl: string,
   roles: [string];
 }
+
+export interface RegisterUser {
+  email: string;
+  name: string;
+  password: string;
+}
