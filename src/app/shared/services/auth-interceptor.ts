@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    const authToken = localStorage.getItem('access_token');
+    const authToken = localStorage.getItem('accessToken');
     // console.log('authToken', authToken);
     if (!authToken) {
       return next.handle(req);
@@ -13,6 +13,7 @@ export class AuthInterceptorService implements HttpInterceptor {
     const authRequest = req.clone({
       headers: req.headers.set('Authorization', 'Bearer ' + authToken),
     });
+    // console.log('Sending request with auth header');
     return next.handle(authRequest);
   }
 }

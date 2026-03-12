@@ -3,6 +3,7 @@ import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { SideForm1 } from './side-form1/side-form1';
 import { SideForm2 } from './side-form2/side-form2';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { SessionService } from 'src/app/shared/services/session.service ';
 
 @Component({
   selector: 'app-sidebar',
@@ -12,6 +13,7 @@ import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 })
 export class Sidebar {
   private offcanvasService = inject(NgbOffcanvas);
+  private sessionService = inject(SessionService);
   
   openSideBar1() {
 		const offcanvasRef = this.offcanvasService.open(SideForm1);
@@ -25,11 +27,11 @@ export class Sidebar {
 
   startApp() { 
     console.log('Starting the app...');
-    // Add your app initialization logic here
+    this.sessionService.createSession();
   }
 
   stopApp() {
     console.log('Stopping the app...');
-    // Add your app cleanup logic here
+    this.sessionService.stopSession();
   } 
 }

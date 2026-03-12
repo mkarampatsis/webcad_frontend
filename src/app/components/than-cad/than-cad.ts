@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Sidebar } from '../sidebar/sidebar';
+import { SessionService } from 'src/app/shared/services/session.service ';
 
 @Component({
   selector: 'app-than-cad',
@@ -8,5 +9,12 @@ import { Sidebar } from '../sidebar/sidebar';
   styleUrl: './than-cad.css',
 })
 export class ThanCad {
+  sessionService = inject(SessionService);
+
+  sessionUrl = this.sessionService.sessionUrl;
+
+  ngOnInit() {
+    console.log('ThanCad initialized', this.sessionUrl());
+  }
 
 }
