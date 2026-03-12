@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators, 
   AbstractControl, } from '@angular/forms';
+import { jwtDecode } from 'jwt-decode';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserService } from 'src/app/shared/services/user.service';
 
@@ -56,17 +57,17 @@ export class Login {
   }
 
   passwordMatchValidator(control: AbstractControl): { [key: string]: boolean } | null {
-    console.log('Validating password match');
+    // console.log('Validating password match');
     const form = control as FormGroup
-    console.log('Form controls:', form?.controls);
+    // console.log('Form controls:', form?.controls);
     const password = form?.get('password')?.value;
     const confirmPassword = form?.get('confirmPassword')?.value;
-    console.log('Password:',  password);
-    console.log('Confirm Password:',   confirmPassword);
+    // console.log('Password:',  password);
+    // console.log('Confirm Password:',   confirmPassword);
 
     if (password && confirmPassword && password !== confirmPassword) {     
       form?.get('confirmPassword')?.setErrors({ passwordMismatch: true }); 
-      console.log('Password mismatch detected');
+      // console.log('Password mismatch detected');
       return { passwordMismatch: true };
     } else {
       form?.get('confirmPassword')?.setErrors(null); 
@@ -76,27 +77,46 @@ export class Login {
 
   signUp() {
     // Implement sign-up logic here, e.g., navigate to a sign-up page or open a sign-up modal
-    console.log('Sign-up button clicked');
+    // console.log('Sign-up button clicked');
     this.newUser = true;
   }
 
-  loginWithEmail() {
-    throw new Error('Method not implemented.');
-  }
+  loginWithEmail(value: Partial<{ email: string|null; password: string|null; }>) {
+    console.log('Login form submitted with values:', value);
+    this.authService.loginUser({
+      email: value.email || '',
+      password: value.password || ''
+    }).subscribe({
+      next: (res) => {
+        // console.log('Login successful', res);
+        const decodedToken = jwtDecode(res.token);
+        this.authService.user.set(decodedToken as any);
+        localStorage.setItem('accessToken', res.token);
+        this.authService.router.navigate(['/than-cad']);
+      },
+      error: (err) => console.error('Login error', err),
+    });
+  }   
 
   signUpFormSubmit(value: Partial<{ email: string|null; firstname: string|null; lastname: string|null; password: string|null; confirmPassword: string|null; }>) {
-    console.log('Sign-up form submitted with values:', value);
+    // console.log('Sign-up form submitted with values:', value);
     this.userService.registerUser({
       email: value.email || undefined,
       name: `${value.firstname} ${value.lastname}`,
       password: value.password || undefined
     }).subscribe({
       next: (res) => {
-        console.log('User registered successfully', res);
+        // console.log('User registered successfully', res);
+        this.signUpForm.reset();
         this.newUser = false;
       },
       error: (err) => console.error('User registration error', err),
     });
+  }
+
+  resetsignUpForm(){
+    this.signUpForm.reset();
+    this.newUser = false;
   }
 
 }

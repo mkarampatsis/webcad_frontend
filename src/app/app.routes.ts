@@ -17,20 +17,23 @@ export const routes: Routes = [
     loadChildren: () => import('./components/three-cad/three-cad.routes').then((m) => m.ThreeCadRoutes),
   },
   {
-    path: 'landing',
-    loadChildren: () => import('./components/landing/landing.routes').then((m) => m.LandingRoutes),
-  },
-   {
     path: 'login',
     loadChildren: () => import('./components/login/login.routes').then((m) => m.LoginRoutes),
+  },
+  { path: 'about', 
+    loadComponent: () => import('./components/about/about').then((m) => m.About),
+  },
+  {
+    path: 'restricted-content',
+    loadComponent: () => import('./shared/components/restricted-content/restricted-content').then((m) => m.RestrictedContent),
+  },
+  {
+    path: 'landing',
+    loadChildren: () => import('./components/landing/landing.routes').then((m) => m.LandingRoutes),
   },
   {
     path: '',
     loadChildren: () => import('./components/landing/landing.routes').then((m) => m.LandingRoutes),
-  },
-  {
-    path: 'restricted-content',
-    loadChildren: () => import('./shared/components/restricted-content/restricted-content').then((m) => m.RestrictedContent),
   },
   {
     path: '**',

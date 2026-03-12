@@ -41,8 +41,12 @@ export class AuthService {
     // });
   }
   
-  login(token: string) {
+  loginGoogle(token: string) {
     return this.http.post<{token:string}>(`${API_AUTH_URL}/google`,{token});
+  }
+
+  loginUser(credentials: {email: string, password:string}) {
+    return this.http.post<{token:string}>(`${API_AUTH_URL}/login`,{credentials});
   }
 
   logout() {
@@ -69,7 +73,7 @@ export class AuthService {
     // send to backend
     // response.credential is the JWT token
     // console.log('Encoded JWT ID token: ' + response.credential);
-    this.login(idToken)
+    this.loginGoogle(idToken)
       .subscribe({
         next: (res) => {
           // console.log('Backend login success', res)

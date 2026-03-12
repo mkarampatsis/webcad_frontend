@@ -12,6 +12,7 @@ import { routes } from './app.routes';
 import { provideNgtRenderer } from 'angular-three/dom';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { AuthInterceptorService } from './shared/services/auth-interceptor';
+import { BackendInterceptor } from './shared/services/backend-interceptor.service';
 
 registerLocaleData(localeEl, 'el-GR');
 
@@ -28,6 +29,7 @@ export const appConfig: ApplicationConfig = {
       useClass: AuthInterceptorService,
       multi: true,
     },
+    { provide: HTTP_INTERCEPTORS, useClass: BackendInterceptor, multi: true },
     { provide: LOCALE_ID, useValue: 'el-GR' },
 
   ],
