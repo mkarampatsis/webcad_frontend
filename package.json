@@ -1,12 +1,13 @@
 {
-  "name": "angular-cad-v.1",
+  "name": "webcad",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "deploy": "ng build && ssh webcad 'rm -rf ~/projects/webcad-frontend/*' && rsync -avz dist/webcad/browser/ webcad:~/projects/webcad-frontend/"
   },
   "prettier": {
     "printWidth": 100,

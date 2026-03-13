@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-cad-v.1": {
+    "webcad": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -42,8 +42,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "2MB",
+                  "maximumError": "5MB"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -71,10 +71,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "angular-cad-v.1:build:production"
+              "buildTarget": "webcad:build:production"
             },
             "development": {
-              "buildTarget": "angular-cad-v.1:build:development"
+              "buildTarget": "webcad:build:development"
             }
           },
           "defaultConfiguration": "development"
