@@ -42,13 +42,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2MB",
+                  "maximumWarning": "4MB",
                   "maximumError": "5MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "6kB",
+                  "maximumError": "10kB"
                 }
               ],
               "outputHashing": "all"
@@ -63,6 +63,17 @@
                   "with": "src/environments/environment.development.ts"
                 }
               ]
+            },
+            "training": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.training.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -75,7 +86,10 @@
             },
             "development": {
               "buildTarget": "webcad:build:development"
-            }
+            },
+            "training": {
+              "buildTarget": "webcad:build:training"
+            } 
           },
           "defaultConfiguration": "development"
         },
