@@ -28,7 +28,7 @@ export class SessionService {
       return;
     }
     console.log('Creating session for user', user);
-    this.http.post<{sessionId: string, url: string}>(`${API_SESSION_URL}/start`, { sessionData: user.userId })
+    this.http.post<{sessionId: string, url: string}>(`${API_SESSION_URL}/start`, { sessionData: user })
       .subscribe({
         next: (res) => {
           console.log('Session created', res);

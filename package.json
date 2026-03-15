@@ -8,7 +8,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy": "ng build && ssh webcad 'rm -rf ~/projects/webcad-frontend/*' && rsync -avz dist/webcad/browser/ webcad:~/projects/webcad-frontend/"
+    "deploy": "ng build && rsync -avz --delete dist/webcad/browser/ webcad:~/projects/webcad-frontend/ && ssh webcad 'sudo nginx -s reload'"
   },
   "prettier": {
     "printWidth": 100,
