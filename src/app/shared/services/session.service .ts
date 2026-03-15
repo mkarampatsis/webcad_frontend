@@ -27,11 +27,11 @@ export class SessionService {
       console.error('No user logged in');
       return;
     }
-    console.log('Creating session for user', user);
+    // console.log('Creating session for user', user);
     this.http.post<{sessionId: string, url: string}>(`${API_SESSION_URL}/start`, { sessionData: user })
       .subscribe({
         next: (res) => {
-          console.log('Session created', res);
+          console.log('Session created', res.sessionId, res.url);
           this.sessionId.set(res.sessionId);
           this.sessionUrl.set(res.url);
         },

@@ -11,6 +11,7 @@ import { ResultsModal } from '../modals/results-modal/results-modal';
 import { SectionsModal } from '../modals/sections-modal/sections-modal';
 import { SettingsModal } from '../modals/settings-modal/settings-modal';
 import { SupportsModal } from '../modals/supports-modal/supports-modal';
+import { FileUpload } from '../modals/file-upload/file-upload';
 
 @Injectable({
   providedIn: 'root',
@@ -114,6 +115,14 @@ export class ModalService {
       centered: true,
     });
     modalRef.componentInstance.data = data;
+    modalRef.componentInstance.modalRef = modalRef;
+  }
+
+  uploadFile() {
+    const modalRef = this.modalOpen.open(FileUpload, {
+      size: 'xl',
+      centered: true,
+    });
     modalRef.componentInstance.modalRef = modalRef;
   }
 }
