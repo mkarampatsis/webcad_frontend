@@ -31,6 +31,7 @@ export class FileUpload {
 
   selectFile(event: any): void {
     this.currentFile = event.target.files[0];
+    console.log("File", this.currentFile)
   }
 
   upload(): void {
