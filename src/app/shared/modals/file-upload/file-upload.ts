@@ -3,6 +3,7 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FileUploadService } from 'src/app/shared/services/file-upload.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-file-upload',
@@ -12,14 +13,17 @@ import { FileUploadService } from 'src/app/shared/services/file-upload.service';
 })
 export class FileUpload {
   uploadService = inject(FileUploadService);
+  authService = inject(AuthService);
   currentFile: File | undefined;
   progress = 0;
   message = '';
   fileInfos: Observable<any> | undefined = undefined;
   modalRef: any;
 
+  user = this.authService.user();
+
   ngOnInit(): void {
-    this.fileInfos = this.uploadService.getFiles();
+    this.fileInfos = this.uploadService.getFiles(this.user?.email);
     this.fileInfos.subscribe((values) => {
       console.log(values);
     });
@@ -39,7 +43,7 @@ export class FileUpload {
             );
           } else if (event instanceof HttpResponse) {
             this.message = event.body.message;
-            this.fileInfos = this.uploadService.getFiles();
+            this.fileInfos = this.uploadService.getFiles(this.user?.email);
           }
         },
         error: (err: any) => {

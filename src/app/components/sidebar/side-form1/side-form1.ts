@@ -2,6 +2,7 @@ import { Component, inject, Input, ViewChild, ElementRef } from '@angular/core';
 import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { DxfLoaderService } from '../../../shared/services/dxf-loader.service';
 import { ImportFileService } from '../../../shared/services/import-file.service';
+import { ModalService } from 'src/app/shared/services/modal.service';
 
 @Component({
   selector: 'app-side-form1',
@@ -16,6 +17,7 @@ activeOffcanvas = inject(NgbActiveOffcanvas);
 
   importFileService = inject(ImportFileService);
   dxfLoaderService = inject(DxfLoaderService);
+  modalService = inject(ModalService)
 	// @Input() name: string | undefined;
 
   // File actions
@@ -24,7 +26,9 @@ activeOffcanvas = inject(NgbActiveOffcanvas);
   saveFile() { console.log('Save File'); }
   importFile() { 
     console.log('Import File'); 
-    this.fileInput.nativeElement.click();
+    this.modalService.uploadFile();
+    // this.fileInput.nativeElement.click();
+
   }
   importDXF() { 
     this.fileInputDXF.nativeElement.click();

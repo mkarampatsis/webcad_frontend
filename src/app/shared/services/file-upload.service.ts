@@ -25,8 +25,8 @@ export class FileUploadService {
     return this.http.request(req);
   }
 
-  getFiles(): Observable<any> {
-    return this.http.get(`${APIPREFIX}/upload/getfiles`);
+  getFiles(email:string | undefined): Observable<any> {
+    return this.http.get(`${APIPREFIX}/upload/getfiles/${email}`);
   }
 
   getUploadByID(id: string): Observable<Blob> {

@@ -1,14 +1,14 @@
 <div class="d-flex justify-content-between m-3">
-  <span class="h5">Μεταφόρτωση αρχείου</span>
+  <span class="h5">File upload</span>
   <button type="button" class="btn-close" (click)="modalRef.dismiss()"></button>
 </div>
 
 <div class="modal-body">
   <div class="card">
     <div class="card-header d-flex justify-content-between">
-      <span class="fw-semibold">Επιλέξτε αρχείo</span>
+      <span class="fw-semibold">Select file</span>
       <span class="text-muted small">
-        Μέγιστο μέγεθος 16ΜΒ, επιτρεπτά είδη: .pdf .jpg</span>
+        Maximum size 16MB, allowed types: .dxf .jpg</span>
     </div>
     <div class="card-body">
       <div class="row">
@@ -42,7 +42,7 @@
 
       @if (fileInfos) {
       <div class="card mt-3">
-        <div class="card-header">Αρχεία που έχετε μεταφορτώσει</div>
+        <div class="card-header">Files you have uploaded</div>
         <ul class="list-group list-group-flush">
           @for (file of fileInfos | async; track file.name) {
           <li class="list-group-item">
@@ -58,6 +58,6 @@
 
 <div class="d-flex justify-content-end m-3">
   <button ngbAutofocus type="button" class="btn btn-primary" (click)="modalRef.close()">
-    Επιστροφή
+    Return
   </button>
 </div>
