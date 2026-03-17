@@ -12,12 +12,12 @@ const APIPREFIX = `${environment.apiURL}`;
 export class FileUploadService {
   http = inject(HttpClient);
 
-  upload(file: File): Observable<HttpEvent<any>> {
+  upload(file: File, email:string): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
 
     formData.append('file', file);
 
-    const req = new HttpRequest('POST', `${APIPREFIX}/upload`, formData, {
+    const req = new HttpRequest('POST', `${APIPREFIX}/upload/${email}`, formData, {
       reportProgress: true,
       responseType: 'json',
     });
