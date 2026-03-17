@@ -30,15 +30,13 @@ export class FileUpload {
   ngOnInit(): void {
     this.fileInfos = this.uploadService.getFiles(this.user?.email);
     this.fileInfos.subscribe((values) => {
-      console.log(values);
+      console.log("fileInfos",values);
     });
 
     this.progress = 0;
   }
 
   selectFile(event: any): void {
-    // this.currentFile = event.target.files[0];
-    // console.log("File", event.target.files[0])
     const input = event.target as HTMLInputElement;
     this.message = '';
 
@@ -68,6 +66,7 @@ export class FileUpload {
           } else if (event instanceof HttpResponse) {
             this.message = event.body.message;
             this.fileInfos = this.uploadService.getFiles(this.user?.email);
+            console.log("fileInfos", this.fileInfos);
           }
         },
         error: (err: any) => {

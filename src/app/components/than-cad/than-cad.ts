@@ -1,6 +1,7 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { Sidebar } from '../sidebar/sidebar';
 import { SessionService } from 'src/app/shared/services/session.service ';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-than-cad',
@@ -9,19 +10,16 @@ import { SessionService } from 'src/app/shared/services/session.service ';
   styleUrl: './than-cad.css',
 })
 export class ThanCad {
+  private sanitizer = inject(DomSanitizer);
   sessionService = inject(SessionService);
 
   sessionUrl = this.sessionService.sessionUrl;
-  url: string | null = '';
 
-  constructor() {
-    effect(() => {
-      if (this.sessionUrl()) {
-        console.log('Session URL changed:', this.sessionUrl());
-        this.url = this.sessionUrl();
-      } else {
-        console.log('Session URL cleared');
-      }
-    });
-  }
+  safeSessionUrl = computed(() => {
+    const url = this.sessionUrl();  // string | null
+
+    if (!url) return null; // <-- important
+
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  });
 }

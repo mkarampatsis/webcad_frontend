@@ -35,23 +35,23 @@
       }
 
       @if (message) {
-      <div class="alert alert-danger mt-2" role="alert">
+      <div class="alert alert-secondary mt-2" role="alert">
         {{ message }}
       </div>
       }
 
-      <!-- @if (fileInfos) {
+      @if (fileInfos) {
       <div class="card mt-3">
         <div class="card-header">Files you have uploaded</div>
-        <ul class="list-group list-group-flush">
-          @for (file of fileInfos | async; track file.name) {
+        <ol class="list-group list-group-numbered">
+         @for (file of (fileInfos | async)?.files; track file) {
           <li class="list-group-item">
-            <a href="{{ file.url }}">{{ file.name }}</a>
+            fileID: {{file.split('~')[0]}}, filename: {{ file.split('~')[1] }}
           </li>
           }
-        </ul>
+        </ol>
       </div>
-      } -->
+      }
     </div>
   </div>
 </div>
