@@ -15,11 +15,19 @@ export class ThanCad {
 
   sessionUrl = this.sessionService.sessionUrl;
 
+  // safeSessionUrl = computed(() => {
+  //   const url = this.sessionUrl();  // string | null
+
+  //   if (!url) return null; // <-- important
+  //   console.log(this.sanitizer.bypassSecurityTrustResourceUrl(url));
+  //   return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  // });
+
   safeSessionUrl = computed(() => {
-    const url = this.sessionUrl();  // string | null
+    const url = this.sessionUrl();
+    if (!url) return null;
 
-    if (!url) return null; // <-- important
-
+    // queueMicrotask(() => {}); // forces change detection
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   });
 }

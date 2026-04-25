@@ -8,8 +8,10 @@
       </iframe> -->
       ssss {{sessionUrl()}}
       @if (safeSessionUrl()) {
-        <div class="flex-grow-1 bg-body-secondary border border-success">
-          <iframe class="w-100 h-100" [src]="safeSessionUrl()" frameborder="0"></iframe>
+        <!-- <div class="flex-grow-1 bg-body-secondary border border-success"> -->
+        <div class="flex-grow-1 d-flex flex-column h-100 bg-body-secondary border border-success">
+          <!-- <iframe class="w-100 h-100" [src]="safeSessionUrl()" frameborder="0"></iframe> -->
+          <iframe class="flex-grow-1 w-100" [src]="safeSessionUrl()" frameborder="0"></iframe>
         </div>
       }
     </div>

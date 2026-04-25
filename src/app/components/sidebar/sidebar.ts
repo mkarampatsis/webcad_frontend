@@ -14,7 +14,7 @@ import { SessionService } from 'src/app/shared/services/session.service ';
 export class Sidebar {
   private offcanvasService = inject(NgbOffcanvas);
   private sessionService = inject(SessionService);
-  
+
   openSideBar1() {
 		const offcanvasRef = this.offcanvasService.open(SideForm1);
 		offcanvasRef.componentInstance.name = 'World';
@@ -27,7 +27,18 @@ export class Sidebar {
 
   startApp() { 
     console.log('Starting the app...');
-    this.sessionService.createSession();
+    
+    this.sessionService.getSession()?.subscribe({
+      next: (res) => {
+        console.log('Session found', res.sessionId, res.url);
+        this.sessionService.sessionId.set(res.sessionId);
+        this.sessionService.sessionUrl.set(res.url);
+      },
+      error: (err) => {
+        console.error('Failed to find session', err)
+        this.sessionService.createSession();
+      },
+    });        
   }
 
   stopApp() {
