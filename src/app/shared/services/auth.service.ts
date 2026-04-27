@@ -1,7 +1,7 @@
 import { effect, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { User } from '../interfaces/user';
+import { IUser } from '../interfaces/user';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { GoogleClientId } from '../../shared/config';
@@ -17,13 +17,13 @@ export class AuthService {
   http: HttpClient = inject(HttpClient);
   router = inject(Router);
 
-  user = signal<User | null>(null);
+  user = signal<IUser | null>(null);
 
   constructor() {
     const access_token = localStorage.getItem("access_token");
     if (access_token) {
       
-      const decodedTokenSubject = jwtDecode(access_token) as unknown as User;
+      const decodedTokenSubject = jwtDecode(access_token) as unknown as IUser;
       this.user.set({
         userId: decodedTokenSubject.userId,
         email: decodedTokenSubject.email,
@@ -77,7 +77,7 @@ export class AuthService {
       .subscribe({
         next: (res) => {
           // console.log('Backend login success', res)
-          const decodedToken = jwtDecode(res.token) as User;
+          const decodedToken = jwtDecode(res.token) as IUser;
           this.user.set(decodedToken);
           localStorage.setItem('accessToken', res.token);
           // console.log('Decoded token:', decodedToken);

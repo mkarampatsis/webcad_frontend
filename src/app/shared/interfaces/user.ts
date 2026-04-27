@@ -1,12 +1,18 @@
-export interface User {
-  userId: string,
-  email: string,
-  name: string,
-  photoUrl: string,
-  roles: [string];
+export interface IRoles {
+  role: string;
+  description: string;
+  active: boolean;
 }
 
-export interface RegisterUser {
+export interface IUser {
+  userId: string;
+  email: string;
+  name: string;
+  photoUrl: string;
+  roles: IRoles[];
+}
+
+export interface IRegisterUser {
   email: string;
   name: string;
   password: string;
