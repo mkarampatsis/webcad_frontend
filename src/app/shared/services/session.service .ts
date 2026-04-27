@@ -21,12 +21,29 @@ export class SessionService {
   sessionId = signal<string | null>(null);
   sessionUrl = signal<string | null>(null);
 
+  getSession() {
+    const user = this.user();
+    if (!user) {
+      console.error('No user logged in');
+      return;
+    }
+
+    const sessionId = this.sessionId();
+    if (sessionId) {
+      console.error('There is an active session already');
+      return;
+    }
+
+    return this.http.get<{sessionId: string, url: string}>(`${API_SESSION_URL}/email/${user.email}`, {})
+  }
+
   createSession() {
     const user = this.user();
     if (!user) {
       console.error('No user logged in');
       return;
     }
+
     // console.log('Creating session for user', user);
     this.http.post<{sessionId: string, url: string}>(`${API_SESSION_URL}/start`, { sessionData: user })
       .subscribe({
