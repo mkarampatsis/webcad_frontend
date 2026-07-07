@@ -19,7 +19,7 @@ export const routes: Routes = [
   {
     path: 'skyciv-renderer',
     loadChildren: () => import('./components/skyciv-renderer/skyciv-renderer.routes').then((m) => m.SkycivRendererRoutes),
-    canActivate: [authGuard, adminRoleGuard],
+    // canActivate: [authGuard, adminRoleGuard],
   },
   {
     path: 'login',
