@@ -17,6 +17,11 @@ export const routes: Routes = [
     loadChildren: () => import('./components/three-cad/three-cad.routes').then((m) => m.ThreeCadRoutes),
   },
   {
+    path: 'skyciv-renderer',
+    loadChildren: () => import('./components/skyciv-renderer/skyciv-renderer.routes').then((m) => m.SkycivRendererRoutes),
+    canActivate: [authGuard, adminRoleGuard],
+  },
+  {
     path: 'login',
     loadChildren: () => import('./components/login/login.routes').then((m) => m.LoginRoutes),
   },
