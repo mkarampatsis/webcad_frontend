@@ -8,6 +8,7 @@ import { AgentService } from '../../shared/services/agent.service';
 import { BuildingStateService } from 'src/app/shared/services/building-state.service';
 import { OperationExecutorService } from 'src/app/shared/services/operation-executor.service';
 import { AIRequest } from 'src/app/shared/interfaces/cad/ai-request';
+import { SkyCivBuilderService } from 'src/app/shared/services/skyciv-builder.service';
 
 @Component({
   selector: 'app-skyciv-renderer',
@@ -22,6 +23,7 @@ export class SkycivRenderer implements AfterViewInit {
   agentService = inject(AgentService);
   buildingStateService = inject(BuildingStateService);
   executorService = inject(OperationExecutorService);
+  skycivBuilderService = inject(SkyCivBuilderService);
 
   private viewer: any;
   private prompt: string = '';
@@ -122,6 +124,7 @@ export class SkycivRenderer implements AfterViewInit {
 
     this.agentService.execute(request).subscribe({
       next: (response) => {
+        console.log('AI Response:', response.operations);
         this.executorService.execute(response.operations);
 
         console.log(this.buildingStateService.building);
@@ -129,6 +132,18 @@ export class SkycivRenderer implements AfterViewInit {
         // Next step:
         // const model = this.skyCivBuilder.build(this.buildingState.building);
         // this.skyCivRenderer.loadModel(model);
+        const model = this.skycivBuilderService.build(
+          this.buildingStateService.building
+        );
+        console.log('Generated SkyCiv model:', model);
+        this.skycivRendererService.clearModel(this.viewer);
+
+        this.skycivRendererService.setModel(
+          this.viewer,
+          model
+        );
+
+        this.skycivRendererService.render(this.viewer);
       },
 
       error: (err) => {

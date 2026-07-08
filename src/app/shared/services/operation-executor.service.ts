@@ -21,6 +21,7 @@ export class OperationExecutorService {
   }
 
   private addFloor(parameters: any) {
+    console.log('Adding floor with parameters:', parameters); 
     this.buildingState.building.floors.push({
       id: crypto.randomUUID(),
       elevation: parameters.elevation,
