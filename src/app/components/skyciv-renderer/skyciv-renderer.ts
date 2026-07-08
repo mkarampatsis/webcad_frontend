@@ -2,22 +2,35 @@ import { Component, inject, AfterViewInit } from '@angular/core';
 import { SkycivRendererService } from '../../shared/services/skyciv-renderer.service';
 import { SkyCivInitializationService } from '../../shared/services/skyciv-initialization.service';
 import { SkyCivModelNormalizerService } from '../../shared/services/skyciv-model-normalizer.service';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AgentService } from '../../shared/services/agent.service';
+import { BuildingStateService } from 'src/app/shared/services/building-state.service';
+import { OperationExecutorService } from 'src/app/shared/services/operation-executor.service';
+import { AIRequest } from 'src/app/shared/interfaces/cad/ai-request';
 
 @Component({
   selector: 'app-skyciv-renderer',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './skyciv-renderer.html',
   styleUrl: './skyciv-renderer.css',
 })
 export class SkycivRenderer implements AfterViewInit {
-  private viewer: any;
-  
   skycivRendererService = inject(SkycivRendererService);
   skyCivInitializationService = inject(SkyCivInitializationService);
   skyCivModelNormalizerService = inject(SkyCivModelNormalizerService);
+  agentService = inject(AgentService);
+  buildingStateService = inject(BuildingStateService);
+  executorService = inject(OperationExecutorService);
+
+  private viewer: any;
+  private prompt: string = '';
+
+  form = new FormGroup({
+    chatAI: new FormControl(null),
+  });
 
   async ngAfterViewInit(): Promise<void> {
-
     this.viewer = await this.skyCivInitializationService.createViewer({
       container: '#renderer-container',
       autoRender: false,
@@ -30,8 +43,8 @@ export class SkycivRenderer implements AfterViewInit {
     this.skycivRendererService.render(this.viewer);
   }
 
-  createModel(){
-     const s3d_model = {
+  createModel() {
+    const s3d_model = {
       nodes: {
         1: { x: 0, y: 0, z: 0 },
         2: { x: 0, y: 0, z: 3 },
@@ -43,7 +56,7 @@ export class SkycivRenderer implements AfterViewInit {
       },
       sections: {
         1: { type: 'rect', d: 0.2, b: 0.1 },
-      }
+      },
     };
 
     return s3d_model;
@@ -101,4 +114,26 @@ export class SkycivRenderer implements AfterViewInit {
     reader.readAsText(file);
   }
 
+  send() {
+    const request: AIRequest = {
+      prompt: this.prompt,
+      building: this.buildingStateService.building,
+    };
+
+    this.agentService.execute(request).subscribe({
+      next: (response) => {
+        this.executorService.execute(response.operations);
+
+        console.log(this.buildingStateService.building);
+
+        // Next step:
+        // const model = this.skyCivBuilder.build(this.buildingState.building);
+        // this.skyCivRenderer.loadModel(model);
+      },
+
+      error: (err) => {
+        console.error(err);
+      },
+    });
+  }
 }
