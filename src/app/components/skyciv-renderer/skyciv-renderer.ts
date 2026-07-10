@@ -105,7 +105,7 @@ export class SkycivRenderer implements AfterViewInit {
       const json = reader.result as string;
       const rawModel = JSON.parse(json);
 
-      const normalized = this.skyCivModelNormalizerService.normalize(rawModel);
+      // const normalized = this.skyCivModelNormalizerService.normalize(rawModel);
 
       this.skycivRendererService.clearModel(this.viewer);
       // this.skycivRendererService.setModel(this.viewer, normalized);
