@@ -10,7 +10,7 @@
   },
   "include": [
     "src/**/*.ts"
-  ],
+, "src/app/shared/interfaces/building/elements"  ],
   "exclude": [
     "src/**/*.spec.ts"
   ]
